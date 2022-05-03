@@ -1,2 +1,12 @@
 ---
-# tasks file for dokku-nextcloud
+- name: Create nextcloud app
+dokku apps:create $APP_NAME
+
+- name: Create PostgreSQL database
+dokku postgres:create $PG_SERVICE_NAME
+
+- name: Link PostgreSQL database to nextcloud app
+dokku postgres:link $PG_SERVICE_NAME $APP_NAME
+
+- name: Create Redis service
+dokku redis:create nextcloud
