@@ -1,12 +1,21 @@
 ---
 - name: Create nextcloud app
-dokku apps:create $APP_NAME
+  shell: "dokku apps:create {{ app_name }} || true"
+  ignore_errors: true
 
-- name: Create PostgreSQL database
-dokku postgres:create $PG_SERVICE_NAME
+- name: Create PostgreSQL service
+  shell: "dokku postgres:create {{ pg_service_name }}"
+  ignore_errors: true
 
-- name: Link PostgreSQL database to nextcloud app
-dokku postgres:link $PG_SERVICE_NAME $APP_NAME
+- name: Link PostgreSQL service to nextcloud app
+  shell: "dokku postgres:link {{ pg_service_name }} {{ app_name }}"
+  ignore_errors: true
 
 - name: Create Redis service
-dokku redis:create nextcloud
+  shell: "dokku redis:create {{ redis_service_name }}"
+  ignore_errors: true
+
+- name: Link Redis service to nextcloud app
+  shell: "dokku redis:link {{ redis_service_name }} {{ app_name }}"
+  ignore_errors: true
+
