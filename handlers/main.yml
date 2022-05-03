@@ -1,2 +1,4 @@
 ---
-# handlers file for dokku-nextcloud
+
+- name: reload nginx
+  service: name=nginx state=reloaded
