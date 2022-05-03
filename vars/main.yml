@@ -5,3 +5,9 @@ redis_service_name: "redis_{{ app_name }}"
 app_domain: "nextcloud.example.com"
 admin_email: "admin@example.com"
 data_path: "/var/lib/dokku/data/storage/{{ app_name }}"
+debian_version: bullseye
+ubuntu_version: bionic
+dependencies:
+  - apt-transport-https
+  - gnupg2
+  - docker.io
