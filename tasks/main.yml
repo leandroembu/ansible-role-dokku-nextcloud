@@ -19,3 +19,5 @@
   shell: "dokku redis:link {{ redis_service_name }} {{ app_name }}"
   ignore_errors: true
 
+- name: Get Redis environment variables to config NextCloud
+  script: ../redis_envvars.sh
