@@ -21,3 +21,15 @@
 
 - name: Get Redis environment variables to config NextCloud
   script: ../redis_envvars.sh
+
+- name: Deploy NextCloud from Docker image
+  shell: "dokku git:from-image {{ app_name }} nextcloud:production"
+  ignore_errors: true
+
+- name: Set app domain
+  shell: "dokku domains:add {{ app_name }} {{ app_domain }}"
+  ignore_errors: true
+
+- name: Config Let's Encrypt
+  shell: "dokku config:set {{ app_name }} DOKKU_LETSENCRYPT_EMAIL={{ admin_email }}"
+  ignore_errors: true
