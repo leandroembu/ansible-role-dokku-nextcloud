@@ -1,0 +1,49 @@
+---
+
+- stat:
+    path: /usr/bin/dokku
+  register: dokku
+
+- name: Install Dokku dependencies
+  apt:
+    name: "{{ dependencies }}"
+    state: present
+    update_cache: true
+
+- block:
+    - name: Add packagecloud.io GPG key
+      apt_key:
+        url: https://packagecloud.io/dokku/dokku/gpgkey
+        state: present
+
+    - name: Add dokku repository
+      apt_repository:
+        repo: "deb https://packagecloud.io/dokku/dokku/ubuntu/ {{ ubuntu_version }} main"
+        state: present
+
+    - shell: echo "dokku dokku/web_config boolean false" | debconf-set-selections
+    - shell: echo "dokku dokku/skip_key_file boolean true" | debconf-set-selections
+
+    - name: Install dokku
+      apt:
+        name: dokku
+        state: latest
+        update_cache: true
+
+  when: not dokku.stat.exists
+  
+- name: "Install Dokku Core Plugins"
+  shell: dokku plugin:install-dependencies --core || true
+  ignore_errors: true
+
+- name: "Install Dokku Let's Encrypt Plugin"
+  shell: dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git || true
+  ignore_errors: true
+
+- name: "Install Dokku Postgres Plugin"
+  shell: dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres || true
+  ignore_errors: true
+
+- name: "Install Dokku Redis Plugin"
+  shell: dokku plugin:install https://github.com/dokku/dokku-redis.git redis || true
+  ignore_errors: true
