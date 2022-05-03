@@ -44,6 +44,8 @@
     - data
   ignore_errors: true
 
+- name: Restart NextCloud app
+  shell: "dokku ps:restart {{ app_name }}"
 
 
 
