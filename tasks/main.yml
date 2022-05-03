@@ -1,4 +1,6 @@
 ---
+- import_tasks: dokku.yml
+
 - name: Create nextcloud app
   shell: "dokku apps:create {{ app_name }} || true"
   ignore_errors: true
@@ -37,7 +39,7 @@
 - name: Create and mount storage volumes
   shell: "mkdir -p {{ data_path }}/{{ item }}"
   shell: "chown www-data:www-data {{ data_path }}/{{ item }}"
-  shell: "dokku storage:mount {{ app_name }} "{{ data_path }}/{{ item }}:/var/www/html/{{ item }}""
+  shell: "dokku storage:mount {{ app_name }} {{ data_path }}/{{ item }}:/var/www/html/{{ item }}"
   loop:
     - config
     - custom_apps
