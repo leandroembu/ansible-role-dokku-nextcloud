@@ -1,0 +1,6 @@
+---
+app_name: nextcloud
+pg_service_name: "pg_{{ app_name }}"
+app_domain: "nextcloud.example.com"
+admin_email: "admin@example.com"
+data_path: "/var/lib/dokku/data/storage/{{ app_name }}"
