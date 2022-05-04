@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-dokku redis:info nextcloud > /tmp/redis_info
+dokku redis:info redis_nextcloud > /tmp/redis_info
 
 redis_host="$(grep -o -P '(?<=@).*(?=:)' /tmp/redis_info)"
 redis_port="$(grep -o -P '(?<=:)(\d+)(?!.*\d)(?=$)' /tmp/redis_info)"

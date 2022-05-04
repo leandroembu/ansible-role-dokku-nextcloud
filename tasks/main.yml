@@ -26,7 +26,6 @@
 
 - name: Deploy NextCloud from Docker image
   shell: "dokku git:from-image {{ app_name }} nextcloud:production"
-  ignore_errors: true
 
 - name: Set app domain
   shell: "dokku domains:add {{ app_name }} {{ app_domain }}"
@@ -37,13 +36,23 @@
   ignore_errors: true
 
 - name: Create and mount storage volumes
-  shell: "mkdir -p {{ data_path }}/{{ item }}"
-  shell: "chown www-data:www-data {{ data_path }}/{{ item }}"
+  file:
+    path: "{{ data_path }}/{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
+  loop:
+    - config
+    - custom_apps
+    - data
+
+- name: Mount storage volumes
   shell: "dokku storage:mount {{ app_name }} {{ data_path }}/{{ item }}:/var/www/html/{{ item }}"
   loop:
     - config
     - custom_apps
     - data
+  
   ignore_errors: true
 
 - name: Restart NextCloud app
