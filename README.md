@@ -17,6 +17,13 @@ Install with ansible-galaxy:
 `ansible-galaxy install leandroramos.ansible_role_dokku_nextcloud`
 And run a playbook using this role.
 
+Example playbook:
+```
+- hosts: all
+  roles:
+    - { role: leandroramos.ansible_role_dokku_nextcloud, become: yes }
+```
+
 Or
 
 - Create a folder with playbook.yml and inventory files
