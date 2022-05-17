@@ -54,16 +54,17 @@
   file:
     path: "{{ data_path }}/{{ item }}"
     state: directory
-    owner: "{{ dirs_owner }}" #www-data
-    group: "{{ dirs_group }}" #www-data
+    owner: "{{ dirs_owner }}"
+    group: "{{ dirs_group }}"
   loop:
   - "{{ storage_dirs }}"
-#    - config
-#    - custom_apps
-#    - data
 
-- name: Mount storage volumes
-  shell: "dokku storage:mount {{ app_name }} {{ data_path }}/{{ item }}:/var/www/html/{{ item }}"
+- name: mount paths and create the host_dir directories
+  dokku_storage:
+    app: "{{ app_name }}"
+    mounts:
+      - "{{ data_path }}/{{ item }}:{{ app_docroot }}{{ item }}"
+    create_host_dir: true
   loop:
   - "{{ storage_dirs }}"
 
