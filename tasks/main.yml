@@ -1,55 +1,73 @@
 ---
-- name: Create nextcloud app
-  shell: "dokku apps:create {{ app_name }} || true"
-  ignore_errors: true
+- name: Create app
+  dokku_app:
+    app: "{{ app_name }}"
+    config:
+      DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
 
-- name: Create PostgreSQL service
-  shell: "dokku postgres:create {{ pg_service_name }}"
-  ignore_errors: true
+- name: Disable the zero downtime deployment
+  dokku_checks:
+    app: "{{ app_name }}"
+    state: absent
 
-- name: Link PostgreSQL service to nextcloud app
-  shell: "dokku postgres:link {{ pg_service_name }} {{ app_name }}"
-  ignore_errors: true
+- name: domains:add "{{ app_name }}" "{{ app_domain }}"
+  dokku_domains:
+    app: "{{ app_name }}"
+    domains:
+      - "{{ app_domain }}"
 
-- name: Create Redis service
-  shell: "dokku redis:create {{ redis_service_name }}"
-  ignore_errors: true
+- name: Enable the letsencrypt plugin
+  dokku_letsencrypt:
+    app: "{{ app_name }}"
 
-- name: Link Redis service to nextcloud app
-  shell: "dokku redis:link {{ redis_service_name }} {{ app_name }}"
-  ignore_errors: true
+- name: postgres:create "{{ pg_service_name }}"
+  dokku_service_create:
+    name: "{{ pg_service_name }}"
+    service: postgres
+
+- name: postgres:link "{{ pg_service_name }}" "{{ app_name }}"
+  dokku_service_link:
+    app: "{{ app_name }}"
+    name: "{{ pg_service_name }}"
+    service: postgres
+
+- name: redis:create "{{ redis_service_name }}"
+  dokku_service_create:
+    name: "{{ redis_service_name }}"
+    service: redis
+
+- name: redis:link default "{{ app_name }}"
+  dokku_service_link:
+    app: "{{ app_name }}"
+    name: "{{ redis_service_name }}"
+    service: redis
 
 - name: Get Redis environment variables to config NextCloud
   script: ../redis_envvars.sh
 
-- name: Deploy NextCloud from Docker image
-  shell: "dokku git:from-image {{ app_name }} nextcloud:production"
-
-- name: Set app domain
-  shell: "dokku domains:add {{ app_name }} {{ app_domain }}"
-  ignore_errors: true
-
-- name: Config Let's Encrypt
-  shell: "dokku config:set {{ app_name }} DOKKU_LETSENCRYPT_EMAIL={{ admin_email }}"
-  ignore_errors: true
+- name: Pull and deploy Nextcloud
+  dokku_image:
+      app: "{{ app_name }}"
+      image: nextcloud:production
 
 - name: Create and mount storage volumes
   file:
     path: "{{ data_path }}/{{ item }}"
     state: directory
-    owner: www-data
-    group: www-data
+    owner: "{{ directories_owner }}" #www-data
+    group: "{{ directories_group }}" #www-data
   loop:
-    - config
-    - custom_apps
-    - data
+  - "{{ storage_dirs }}"
+#    - config
+#    - custom_apps
+#    - data
 
 - name: Mount storage volumes
   shell: "dokku storage:mount {{ app_name }} {{ data_path }}/{{ item }}:/var/www/html/{{ item }}"
   loop:
-    - config
-    - custom_apps
-    - data
+  - config
+  - custom_apps
+  - data
   
   ignore_errors: true
 
