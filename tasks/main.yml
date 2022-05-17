@@ -54,8 +54,8 @@
   file:
     path: "{{ data_path }}/{{ item }}"
     state: directory
-    owner: "{{ directories_owner }}" #www-data
-    group: "{{ directories_group }}" #www-data
+    owner: "{{ dirs_owner }}" #www-data
+    group: "{{ dirs_group }}" #www-data
   loop:
   - "{{ storage_dirs }}"
 #    - config
@@ -65,11 +65,7 @@
 - name: Mount storage volumes
   shell: "dokku storage:mount {{ app_name }} {{ data_path }}/{{ item }}:/var/www/html/{{ item }}"
   loop:
-  - config
-  - custom_apps
-  - data
-  
-  ignore_errors: true
+  - "{{ storage_dirs }}"
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
