@@ -1,6 +1,4 @@
 ---
-- import_tasks: dokku.yml
-
 - name: Create nextcloud app
   shell: "dokku apps:create {{ app_name }} || true"
   ignore_errors: true
