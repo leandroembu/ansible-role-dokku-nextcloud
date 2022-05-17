@@ -6,6 +6,7 @@ app_domain: "nextcloud.example.com"
 admin_email: "admin@example.com"
 data_path: "/var/lib/dokku/data/storage/{{ app_name }}"
 
+app_docroot: "/var/www/html/"
 storage_dirs:
 - config
 - custom_apps
