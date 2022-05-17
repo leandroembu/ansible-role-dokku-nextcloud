@@ -1,15 +1,18 @@
 galaxy_info:
   author: Leandro Ramos
-  description: A simple role to deploy NextCloud using Dokku on Debian
+  description: This role helps to deploy NextCloud using Dokku on Debian
   company: Pythonic Cafe
-
   license: GPL-3.0-or-later
-
-  min_ansible_version: 2.1
-
+  min_ansible_version: 2.2
+  platforms:
+  - name: Debian
+    versions:
+    - stretch
+    - buster
+    - bullseye
   galaxy_tags:
     - nextcloud
     - dokku
     - debian
-
-dependencies: []
+dependencies:
+- dokku_bot.ansible_dokku
