@@ -15,10 +15,10 @@
       - "{{ app_domain }}"
 
 - name: environment configuration
-      dokku_config:
-        app: "{{ app_name }}"
-        config:
-          DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
+  dokku_config:
+    app: "{{ app_name }}"
+    config:
+      DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
 
 - name: Enable the letsencrypt plugin
   dokku_letsencrypt:
