@@ -20,9 +20,9 @@
     config:
       DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
 
-- name: Enable the letsencrypt plugin
-  dokku_letsencrypt:
-    app: "{{ app_name }}"
+#- name: Enable the letsencrypt plugin
+#  dokku_letsencrypt:
+#    app: "{{ app_name }}"
 
 - name: postgres:create "{{ pg_service_name }}"
   dokku_service_create:
