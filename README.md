@@ -46,11 +46,14 @@ Deploy NextCloud on Debian servers using Dokku.
 ```
 - type: `list`
 - description: Mountpoints to store app's configs, data, etc.
-
 ### dirs_owner
 - default: `www-data`
 - type: `string`
 - description: Webserver user, who owns the docroot.
+### dirs_group
+- default: `www-data`
+- type: `string`
+- description: Webserver group.
 
 ## Example Playbooks
 ```yaml

@@ -12,3 +12,4 @@ storage_dirs:
 - custom_apps
 - data
 dirs_owner: www-data
+dirs_group: www-data
