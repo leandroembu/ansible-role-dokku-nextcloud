@@ -54,15 +54,6 @@
       app: "{{ app_name }}"
       image: nextcloud:production
 
-- name: Create and mount storage volumes
-  file:
-    path: "{{ data_path }}/{{ item }}"
-    state: directory
-    owner: "{{ dirs_owner }}"
-    group: "{{ dirs_group }}"
-  loop:
-  - "{{ storage_dirs }}"
-
 - name: mount paths and create the host_dir directories
   dokku_storage:
     app: "{{ app_name }}"
