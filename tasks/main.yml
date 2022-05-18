@@ -69,9 +69,7 @@
     mounts:
       - "{{ data_path }}/{{ item }}:{{ app_docroot }}{{ item }}"
   loop:
-  - data
-  - config
-  - custom_apps
+  - "{{ storage_dirs }}"
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
