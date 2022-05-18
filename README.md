@@ -1,8 +1,8 @@
-# Dokku NextCloud
+# Ansible Dokku NextCloud
 
 [![Ansible Role](https://img.shields.io/ansible/role/59074.svg)](https://galaxy.ansible.com/leandroramos/ansible_role_dokku_nextcloud)
 
-Deploy NextCloud on Debian servers using Dokku.
+Deploy NextCloud on Debian servers using Dokku. This role is powered by [dokku/ansible-dokku](https://github.com/dokku/ansible-dokku/) role.
 
 ## Requirements
 
