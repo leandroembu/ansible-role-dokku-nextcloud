@@ -2,8 +2,8 @@
 app_name: nextcloud
 pg_service_name: "pg_{{ app_name }}"
 redis_service_name: "redis_{{ app_name }}"
-app_domain: "nextcloud.dokku.local"
-admin_email: "leandroramos@disroot.org"
+app_domain: "nextcloud.example.com"
+admin_email: "admin@example.com"
 data_path: "/var/lib/dokku/data/storage/{{ app_name }}"
 
 app_docroot: "/var/www/html/"
