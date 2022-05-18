@@ -54,22 +54,16 @@
       app: "{{ app_name }}"
       image: nextcloud:production
 
-- name: Create storage folders
-  file:
-    path: "{{ data_path }}/{{ item }}"
-    state: directory
-    owner: "{{ dirs_owner }}"
-    group: "{{ dirs_group }}"
-  loop:
-    - "{{ storage_dirs }}"
-
 - name: mount volume paths
   dokku_storage:
     app: "{{ app_name }}"
     mounts:
       - "{{ data_path }}/{{ item }}:{{ app_docroot }}{{ item }}"
+    create_host_dir: true
   loop:
-    - "{{ storage_dirs }}"
+    - config
+    - custom_apps
+    - data
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
