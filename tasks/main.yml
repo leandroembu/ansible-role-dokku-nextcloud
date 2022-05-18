@@ -2,8 +2,6 @@
 - name: Create app
   dokku_app:
     app: "{{ app_name }}"
-    config:
-      DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
 
 - name: Disable the zero downtime deployment
   dokku_checks:
@@ -15,6 +13,12 @@
     app: "{{ app_name }}"
     domains:
       - "{{ app_domain }}"
+
+- name: environment configuration
+      dokku_config:
+        app: "{{ app_name }}"
+        config:
+          DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
 
 - name: Enable the letsencrypt plugin
   dokku_letsencrypt:
