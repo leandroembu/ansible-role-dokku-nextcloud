@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - dokku-nextcloud
+    - leandroramos.ansible_role_dokku_nextcloud

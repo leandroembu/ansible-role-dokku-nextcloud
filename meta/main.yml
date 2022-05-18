@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Leandro Ramos
   description: This role helps to deploy NextCloud using Dokku on Debian
