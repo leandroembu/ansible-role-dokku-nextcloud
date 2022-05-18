@@ -61,7 +61,7 @@
     owner: "{{ dirs_owner }}"
     group: "{{ dirs_group }}"
   loop:
-  - "{{ storage_dirs }}"
+    - "{{ storage_dirs }}"
 
 - name: mount volume paths
   dokku_storage:
@@ -69,7 +69,7 @@
     mounts:
       - "{{ data_path }}/{{ item }}:{{ app_docroot }}{{ item }}"
   loop:
-  - "{{ storage_dirs }}"
+    - "{{ storage_dirs }}"
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
