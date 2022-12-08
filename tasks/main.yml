@@ -23,7 +23,7 @@
   dokku_ports:
     app: "{{ app_name }}"
     mappings:
-        - http:80:80
+      - http:80:80
 
 - name: environment configuration
   dokku_config:
