@@ -14,17 +14,6 @@
     domains:
       - "{{ app_domain }}"
 
-- name: proxy:ports-clear "{{ app_name }}"
-  dokku_ports:
-    app: "{{ app_name }}"
-    state: clear
-
-- name: proxy:ports-set "{{ app_name }}" http:80:80
-  dokku_ports:
-    app: "{{ app_name }}"
-    mappings:
-      - http:80:80
-
 - name: environment configuration
   dokku_config:
     app: "{{ app_name }}"
@@ -75,6 +64,11 @@
     - config
     - custom_apps
     - data
+
+- name: proxy:ports-clear "{{ app_name }}"
+  dokku_ports:
+    app: "{{ app_name }}"
+    state: clear
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
