@@ -20,10 +20,6 @@
     config:
       DOKKU_LETSENCRYPT_EMAIL: "{{ admin_email }}"
 
-#- name: Enable the letsencrypt plugin
-#  dokku_letsencrypt:
-#    app: "{{ app_name }}"
-
 - name: postgres:create "{{ pg_service_name }}"
   dokku_service_create:
     name: "{{ pg_service_name }}"
@@ -69,6 +65,16 @@
   dokku_ports:
     app: "{{ app_name }}"
     state: clear
+
+- name: proxy:ports-set "{{ app_name }}" https:443:80
+  dokku_ports:
+    app: "{{ app_name }}"
+    mappings:
+      - https:443:80
+
+- name: Enable the letsencrypt plugin
+  dokku_letsencrypt:
+    app: "{{ app_name }}"
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
