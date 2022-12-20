@@ -56,10 +56,17 @@
     mounts:
       - "{{ data_path }}/{{ item }}:{{ app_docroot }}{{ item }}"
     create_host_dir: true
+    user: www-data
+    group: www-data
   loop:
     - config
     - custom_apps
     - data
+
+- name: Change data directory permissions
+  ansible.builtin.file:
+    path: "{{ data_path }}/data"
+    mode: '0770'
 
 - name: proxy:ports-clear "{{ app_name }}"
   dokku_ports:
