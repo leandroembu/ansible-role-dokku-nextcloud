@@ -43,7 +43,7 @@
     service: redis
 
 - name: Get Redis environment variables to config NextCloud
-  script: ../redis_envvars.sh
+  script: ../redis_envvars.sh "{{ app_name }}"
 
 - name: Pull and deploy Nextcloud
   dokku_image:
