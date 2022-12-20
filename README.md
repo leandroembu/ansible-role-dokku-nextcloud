@@ -46,21 +46,23 @@ Deploy NextCloud on Debian servers using Dokku. This role is powered by [dokku/a
 ---
 - hosts: all
   roles:
-    - leandroramos.ansible_role_dokku_nextcloud
+    - ansible-role-dokku-nextcloud
   vars:
     dokku_users:
-      - name: "John Doe"
-        username: johndoe
+      - name: "Leandro Ramos"
+        username: leandro
         ssh_key: "{{lookup('file', '~/.ssh/id_rsa.pub')}}"
     dokku_plugins:
       - name: postgres
         url: https://github.com/dokku/dokku-postgres.git
       - name: redis
         url: https://github.com/dokku/dokku-redis.git
-    dokku_hostname: johndoe.me
-    app_name: nextcloud
-    app_domain: nextcloud.johndoe.me
-    admin_email: johndoe@johndoe.me
+      - name: letsencrypt
+        url: https://github.com/dokku/dokku-letsencrypt.git
+    dokku_hostname: nuvem.social
+    app_name: alfa
+    app_domain: alfa.nuvem.social
+    admin_email: leandroramos@disroot.org
 ```
 
 License
