@@ -73,15 +73,15 @@
     app: "{{ app_name }}"
     state: clear
 
+- name: Enable the letsencrypt plugin
+  dokku_letsencrypt:
+    app: "{{ app_name }}"
+
 - name: proxy:ports-set "{{ app_name }}" https:443:80
   dokku_ports:
     app: "{{ app_name }}"
     mappings:
       - https:443:80
-
-- name: Enable the letsencrypt plugin
-  dokku_letsencrypt:
-    app: "{{ app_name }}"
 
 - name: Restart NextCloud app
   shell: "dokku ps:restart {{ app_name }}"
